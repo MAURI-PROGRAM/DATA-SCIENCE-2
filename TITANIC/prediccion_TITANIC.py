@@ -236,7 +236,13 @@ svc = SVC()
 svc.fit(X_train, Y_train)
 Y_pred = svc.predict(X_test)
 acc_svc = round(svc.score(X_train, Y_train) * 100, 2)
-print(acc_svc)
+#print(acc_svc)
 
+#KNN
+knn = KNeighborsClassifier(n_neighbors = 3)
+knn.fit(X_train, Y_train)
+Y_pred = knn.predict(X_test)
+acc_knn = round(knn.score(X_train, Y_train) * 100, 2)
+print(acc_knn)
 
 
