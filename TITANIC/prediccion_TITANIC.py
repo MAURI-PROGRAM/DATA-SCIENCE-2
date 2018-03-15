@@ -170,3 +170,9 @@ test_df = test_df.drop(['Parch', 'SibSp', 'FamilySize'], axis=1)
 combine = [train_df, test_df]
 
 print(train_df.head())
+
+for dataset in combine:
+    dataset['Age*Class'] = dataset.Age * dataset.Pclass
+
+train_df.loc[:, ['Age*Class', 'Age', 'Pclass']].head(10)
+
