@@ -26,23 +26,23 @@ combine = [train_df, test_df]
 #print(test_df.columns.values)
 
 # preview the data
-print(train_df.head())
-print('_'*40)
-print(train_df.tail())
-print('_'*40)
-print(train_df.info())
-print('_'*40)
-test_df.info()
-print('_'*40)
-print(train_df.describe())
-print('_'*40)
-print(train_df.describe(include=['O']))
-print('_'*40)
+#print(train_df.head())
+#print('_'*40)
+#print(train_df.tail())
+#print('_'*40)
+#print(train_df.info())
+#print('_'*40)
+#test_df.info()
+#print('_'*40)
+#print(train_df.describe())
+#print('_'*40)
+#print(train_df.describe(include=['O']))
+#print('_'*40)
 #Relacion entre atributos y supervivencia
-print(train_df[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean().sort_values(by='Survived', ascending=False))
-print(train_df[["Sex", "Survived"]].groupby(['Sex'], as_index=False).mean().sort_values(by='Survived', ascending=False))
-print(train_df[["SibSp", "Survived"]].groupby(['SibSp'], as_index=False).mean().sort_values(by='Survived', ascending=False))
-print(train_df[["Parch", "Survived"]].groupby(['Parch'], as_index=False).mean().sort_values(by='Survived', ascending=False))
+train_df[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean().sort_values(by='Survived', ascending=False)
+train_df[["Sex", "Survived"]].groupby(['Sex'], as_index=False).mean().sort_values(by='Survived', ascending=False)
+train_df[["SibSp", "Survived"]].groupby(['SibSp'], as_index=False).mean().sort_values(by='Survived', ascending=False)
+train_df[["Parch", "Survived"]].groupby(['Parch'], as_index=False).mean().sort_values(by='Survived', ascending=False)
 
 
 g = sns.FacetGrid(train_df, col='Survived')
@@ -87,18 +87,18 @@ for dataset in combine:
     dataset['Title'] = dataset['Title'].replace(['Mlle','Ms'], 'Miss')
     dataset['Title'] = dataset['Title'].replace('Mme', 'Mrs')
     
-print(train_df[['Title', 'Survived']].groupby(['Title'], as_index=False).mean())
+train_df[['Title', 'Survived']].groupby(['Title'], as_index=False).mean()
 
 title_mapping = {"Mr": 1, "Miss": 2, "Mrs": 3, "Master": 4, "Rare": 5}
 for dataset in combine:
     dataset['Title'] = dataset['Title'].map(title_mapping)
     dataset['Title'] = dataset['Title'].fillna(0)
 
-print(train_df.head())
+#print(train_df.head())
 train_df = train_df.drop(['Name', 'PassengerId'], axis=1)
 test_df = test_df.drop(['Name'], axis=1)
 combine = [train_df, test_df]
-print(train_df.shape, test_df.shape)
+#print(train_df.shape, test_df.shape)
 
 for dataset in combine:
     dataset['Sex'] = dataset['Sex'].map( {'female': 1, 'male': 0} ).astype(int)
@@ -207,3 +207,16 @@ combine = [train_df, test_df]
     
 #print(train_df.head(10))
 
+
+#Modelar, predecir y resolver
+
+X_train = train_df.drop("Survived", axis=1)
+Y_train = train_df["Survived"]
+X_test  = test_df.drop("PassengerId", axis=1).copy()
+#print(X_train.shape, Y_train.shape, X_test.shape)
+
+logreg = LogisticRegression()
+logreg.fit(X_train, Y_train)
+Y_pred = logreg.predict(X_test)
+acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
+print(acc_log)
