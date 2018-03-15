@@ -22,8 +22,8 @@ train_df = pd.read_csv('input_data/train.csv')
 test_df = pd.read_csv('input_data/test.csv')
 combine = [train_df, test_df]
 
-print(train_df.columns.values)
-print(test_df.columns.values)
+#print(train_df.columns.values)
+#print(test_df.columns.values)
 
 # preview the data
 print(train_df.head())
@@ -67,18 +67,18 @@ grid.map(sns.barplot, 'Sex', 'Fare', alpha=.5, ci=None)
 grid.add_legend()
 #plt.show()
 
-print("Before", train_df.shape, test_df.shape, combine[0].shape, combine[1].shape)
+#print("Before", train_df.shape, test_df.shape, combine[0].shape, combine[1].shape)
 
 train_df = train_df.drop(['Ticket', 'Cabin'], axis=1)
 test_df = test_df.drop(['Ticket', 'Cabin'], axis=1)
 combine = [train_df, test_df]
-print("After", train_df.shape, test_df.shape, combine[0].shape, combine[1].shape)
+#print("After", train_df.shape, test_df.shape, combine[0].shape, combine[1].shape)
 
 
 for dataset in combine:
     dataset['Title'] = dataset.Name.str.extract(' ([A-Za-z]+)\.', expand=False)
 
-print(pd.crosstab(train_df['Title'], train_df['Sex']))
+pd.crosstab(train_df['Title'], train_df['Sex'])
 
 for dataset in combine:
     dataset['Title'] = dataset['Title'].replace(['Lady', 'Countess','Capt', 'Col',\
@@ -103,7 +103,7 @@ print(train_df.shape, test_df.shape)
 for dataset in combine:
     dataset['Sex'] = dataset['Sex'].map( {'female': 1, 'male': 0} ).astype(int)
 
-print(train_df.head())
+#print(train_df.head())
 
 grid = sns.FacetGrid(train_df, row='Pclass', col='Sex', size=2.2, aspect=1.6)
 grid.map(plt.hist, 'Age', alpha=.5, bins=20)
@@ -135,7 +135,7 @@ for dataset in combine:
 
     dataset['Age'] = dataset['Age'].astype(int)
 
-print(train_df.head())
+#print(train_df.head())
 
 train_df['AgeBand'] = pd.cut(train_df['Age'], 5)
 print(train_df[['AgeBand', 'Survived']].groupby(['AgeBand'], as_index=False).mean().sort_values(by='AgeBand', ascending=True))
@@ -146,17 +146,17 @@ for dataset in combine:
     dataset.loc[(dataset['Age'] > 32) & (dataset['Age'] <= 48), 'Age'] = 2
     dataset.loc[(dataset['Age'] > 48) & (dataset['Age'] <= 64), 'Age'] = 3
     dataset.loc[ dataset['Age'] > 64, 'Age']
-print(train_df.head())
+#print(train_df.head())
 
 
 train_df = train_df.drop(['AgeBand'], axis=1)
 combine = [train_df, test_df]
-print(train_df.head())
+#print(train_df.head())
 
 for dataset in combine:
     dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
 
-print(train_df[['FamilySize', 'Survived']].groupby(['FamilySize'], as_index=False).mean().sort_values(by='Survived', ascending=False))
+train_df[['FamilySize', 'Survived']].groupby(['FamilySize'], as_index=False).mean().sort_values(by='Survived', ascending=False)
 
 
 for dataset in combine:
@@ -169,7 +169,7 @@ train_df = train_df.drop(['Parch', 'SibSp', 'FamilySize'], axis=1)
 test_df = test_df.drop(['Parch', 'SibSp', 'FamilySize'], axis=1)
 combine = [train_df, test_df]
 
-print(train_df.head())
+#print(train_df.head())
 
 for dataset in combine:
     dataset['Age*Class'] = dataset.Age * dataset.Pclass
@@ -205,4 +205,5 @@ for dataset in combine:
 train_df = train_df.drop(['FareBand'], axis=1)
 combine = [train_df, test_df]
     
-print(train_df.head(10))
+#print(train_df.head(10))
+
