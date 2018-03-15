@@ -176,3 +176,13 @@ for dataset in combine:
 
 train_df.loc[:, ['Age*Class', 'Age', 'Pclass']].head(10)
 
+
+freq_port = train_df.Embarked.dropna().mode()[0]
+freq_port
+
+for dataset in combine:
+    dataset['Embarked'] = dataset['Embarked'].fillna(freq_port)
+    
+train_df[['Embarked', 'Survived']].groupby(['Embarked'], as_index=False).mean().sort_values(by='Survived', ascending=False)
+
+
