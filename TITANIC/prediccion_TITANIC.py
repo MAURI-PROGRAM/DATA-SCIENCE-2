@@ -111,7 +111,7 @@ grid.add_legend()
 
 
 guess_ages = np.zeros((2,3))
-print(guess_ages)
+#print(guess_ages)
 
 for dataset in combine:
     for i in range(0, 2):
@@ -138,7 +138,7 @@ for dataset in combine:
 #print(train_df.head())
 
 train_df['AgeBand'] = pd.cut(train_df['Age'], 5)
-print(train_df[['AgeBand', 'Survived']].groupby(['AgeBand'], as_index=False).mean().sort_values(by='AgeBand', ascending=True))
+train_df[['AgeBand', 'Survived']].groupby(['AgeBand'], as_index=False).mean().sort_values(by='AgeBand', ascending=True)
 
 for dataset in combine:    
     dataset.loc[ dataset['Age'] <= 16, 'Age'] = 0
@@ -210,20 +210,33 @@ combine = [train_df, test_df]
 
 #Modelar, predecir y resolver
 
+
 X_train = train_df.drop("Survived", axis=1)
 Y_train = train_df["Survived"]
 X_test  = test_df.drop("PassengerId", axis=1).copy()
 #print(X_train.shape, Y_train.shape, X_test.shape)
 
+
+#REGRESION LOGISTICA
 logreg = LogisticRegression()
 logreg.fit(X_train, Y_train)
 Y_pred = logreg.predict(X_test)
 acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
 #valoracion en prediccion
-acc_log
+#print(acc_log)
 
 coeff_df = pd.DataFrame(train_df.columns.delete(0))
 coeff_df.columns = ['Feature']
 coeff_df["Correlation"] = pd.Series(logreg.coef_[0])
 
-print(coeff_df.sort_values(by='Correlation', ascending=False))
+#print(coeff_df.sort_values(by='Correlation', ascending=False))
+
+#SVM
+svc = SVC()
+svc.fit(X_train, Y_train)
+Y_pred = svc.predict(X_test)
+acc_svc = round(svc.score(X_train, Y_train) * 100, 2)
+print(acc_svc)
+
+
+
