@@ -264,9 +264,14 @@ linear_svc = LinearSVC()
 linear_svc.fit(X_train, Y_train)
 Y_pred = linear_svc.predict(X_test)
 acc_linear_svc = round(linear_svc.score(X_train, Y_train) * 100, 2)
-print(acc_linear_svc)
+#print(acc_linear_svc)
 
 
-
+# Stochastic Gradient Descent
+sgd = SGDClassifier()
+sgd.fit(X_train, Y_train)
+Y_pred = sgd.predict(X_test)
+acc_sgd = round(sgd.score(X_train, Y_train) * 100, 2)
+print(acc_sgd)
 
 
